@@ -51,7 +51,7 @@ public class Main {
         return sb.toString();
     }
 
-    public static void сode(String path, int key) { // кодировка файла
+    public static void code(String path, int key) { // кодировка файла
         try (FileInputStream fis = new FileInputStream(path);
              BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("codedText.txt")))) {
@@ -114,5 +114,42 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("CryptoAnalyzer");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            while (true) {
+                System.out.println("Menu - 1 \nCode - 2 \nDecode - 3 \nBrute - 4 \nExit - 5");
+                int indexMenu = Integer.parseInt(reader.readLine());
+                String path;
+                int key;
+                switch (indexMenu) {
+                    case 1:
+                        break;
+                    case 2:
+                        System.out.println("Enter path to file");
+                        path = reader.readLine();
+                        System.out.println("Enter key");
+                        key = Integer.parseInt(reader.readLine());
+                        code(path, key);
+                        break;
+                    case 3:
+                        System.out.println("Enter path to file");
+                        path = reader.readLine();
+                        System.out.println("Enter key");
+                        key = Integer.parseInt(reader.readLine());
+                        deCode(path, key);
+                        break;
+                    case 4:
+                        System.out.println("Enter path to file");
+                        path = reader.readLine();
+                        bruteForce(path);
+                        break;
+                    case 5:
+                        return;
+                    default:
+                        System.out.println("Wrong number");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
