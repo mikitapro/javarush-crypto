@@ -3,6 +3,7 @@ package com.javarush.cryptoanalyer;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     private static final List<Character> ALPHABET = Arrays.asList('а', 'б', 'в',
@@ -74,6 +75,37 @@ public class Main {
                 String s = reader.readLine();
                 writer.write(stringDecode(s, key));
                 writer.write("\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void bruteForce(String path) { // взлом
+        try (FileInputStream fis = new FileInputStream(path);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("bruteForceText.txt")))) {
+            reader.mark(1);
+            int key = 0;
+            Scanner scanner = new Scanner(System.in);
+            String s;
+            while (true) {
+                s = reader.readLine();
+                System.out.println(stringDecode(s, key));
+                System.out.println("a meaningful expression? / y or n"); // осмысленно?
+                String answer = scanner.nextLine();
+                if (answer.equals("y")) {
+                    reader.reset();
+                    while (reader.ready()) {
+                        s = reader.readLine();
+                        writer.write(stringDecode(s, key));
+                        writer.write("\n");
+                    }
+                    break;
+                } else if (answer.equals("n")) {
+                    key++;
+                    reader.reset();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
