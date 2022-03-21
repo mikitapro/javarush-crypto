@@ -1,5 +1,6 @@
 package com.javarush.cryptoanalyer;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +49,37 @@ public class Main {
         }
         return sb.toString();
     }
+
+    public static void сode(String path, int key) { // кодировка файла
+        try (FileInputStream fis = new FileInputStream(path);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("codedText.txt")))) {
+
+            while (reader.ready()) {
+                String s = reader.readLine();
+                writer.write(stringCode(s, key));
+                writer.write("\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deCode(String path, int key) { // декодировка файла
+        try (FileInputStream fis = new FileInputStream(path);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("decodedText.txt")))) {
+
+            while (reader.ready()) {
+                String s = reader.readLine();
+                writer.write(stringDecode(s, key));
+                writer.write("\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("CryptoAnalyzer");
     }
