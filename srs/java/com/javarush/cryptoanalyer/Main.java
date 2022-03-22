@@ -15,7 +15,7 @@ public class Main {
         if (number < 0)
             return "Wrong key";
         int key = number % ALPHABET.size(); // получение ключа
-        StringBuilder sb = new StringBuilder();
+        StringBuilder codedText = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
             char symbol = text.charAt(i);
             if (ALPHABET.contains(symbol)) {
@@ -25,10 +25,10 @@ public class Main {
                     newIndex -= ALPHABET.size(); // сделать круг по алфавиту
                 }
                 char newSymbol = ALPHABET.get(newIndex); // новый символ
-                sb.append(newSymbol);
+                codedText.append(newSymbol);
             }
         }
-        return sb.toString();
+        return codedText.toString();
     }
 
     public static String stringDecode(String text, int number) { // построчная декодировка
@@ -57,12 +57,12 @@ public class Main {
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("codedText.txt")))) {
 
             while (reader.ready()) {
-                String s = reader.readLine();
-                writer.write(stringCode(s, key));
+                String stringOfText = reader.readLine();
+                writer.write(stringCode(stringOfText, key));
                 writer.write("\n");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("File is not found" + e.getMessage());
         }
     }
 
@@ -72,12 +72,12 @@ public class Main {
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("decodedText.txt")))) {
 
             while (reader.ready()) {
-                String s = reader.readLine();
-                writer.write(stringDecode(s, key));
+                String stringOfText = reader.readLine();
+                writer.write(stringDecode(stringOfText, key));
                 writer.write("\n");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("File is not found" + e.getMessage());
         }
     }
 
@@ -88,17 +88,17 @@ public class Main {
             reader.mark(1);
             int key = 0;
             Scanner scanner = new Scanner(System.in);
-            String s;
+            String stringOfText;
             while (true) {
-                s = reader.readLine();
-                System.out.println(stringDecode(s, key));
+                stringOfText = reader.readLine();
+                System.out.println(stringDecode(stringOfText, key));
                 System.out.println("a meaningful expression? / y or n"); // осмысленно?
                 String answer = scanner.nextLine();
                 if (answer.equals("y")) {
                     reader.reset();
                     while (reader.ready()) {
-                        s = reader.readLine();
-                        writer.write(stringDecode(s, key));
+                        stringOfText = reader.readLine();
+                        writer.write(stringDecode(stringOfText, key));
                         writer.write("\n");
                     }
                     break;
@@ -108,7 +108,7 @@ public class Main {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("File is not found" + e.getMessage());
         }
     }
 
@@ -149,7 +149,7 @@ public class Main {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("File is not found" + e.getMessage());
         }
     }
 }
