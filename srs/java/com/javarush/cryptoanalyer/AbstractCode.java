@@ -10,7 +10,7 @@ public abstract class AbstractCode {
             'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', '.', ',', '«', '»',
             ':', '!', '?', ' ');
 
-    public static final String WRONG_KEY = "Wrong_key";
+    private static final String WRONG_KEY = "Wrong_key";
 
     public static String stringEncode(String text, int number) { // построчная кодировка
         if (number < 0)
@@ -36,7 +36,7 @@ public abstract class AbstractCode {
         if (number < 0)
             return "Wrong key";
         int key = number % ALPHABET.size(); // получение ключа
-        StringBuilder sb = new StringBuilder();
+        StringBuilder decodedText = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
             char symbol = text.charAt(i);
             if (ALPHABET.contains(symbol)) {
@@ -46,9 +46,9 @@ public abstract class AbstractCode {
                     newIndex += ALPHABET.size(); // сделать круг по алфавиту
                 }
                 char newSymbol = ALPHABET.get(newIndex);
-                sb.append(newSymbol);
+                decodedText.append(newSymbol);
             }
         }
-        return sb.toString();
+        return decodedText.toString();
     }
 }
